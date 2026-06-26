@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
-using System.Text.RegularExpressions; 
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using VehicleServiceSystem.Data;
+using System.Drawing;
 
 namespace VehicleServiceSystem.UserControls
 {
@@ -15,7 +15,7 @@ namespace VehicleServiceSystem.UserControls
         public UC_Registry()
         {
             InitializeComponent();
-
+            this.Load += UC_Registry_Load;
             btnSave.Click += btnSave_Click;
             btnUpdate.Click += btnUpdate_Click;
             btnDelete.Click += btnDelete_Click;
@@ -23,299 +23,205 @@ namespace VehicleServiceSystem.UserControls
             btnSearch.Click += btnSearch_Click;
             dgvRegistry.CellClick += dgvRegistry_CellClick;
 
-
             txtContactNo.KeyPress += txtContactNo_KeyPress;
             txtMileage.KeyPress += txtContactNo_KeyPress;
         }
-        // Load event handler for the UserControl
+
         private void UC_Registry_Load(object sender, EventArgs e)
         {
             LoadRegistryData();
+
+            using (MySqlConnection conn = DbConnection.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+
+                    // load vehicle brands
+                    string queryBrand = "SELECT BrandID, BrandName FROM vehiclebrands ORDER BY BrandName ASC";
+                    MySqlDataAdapter daBrand = new MySqlDataAdapter(queryBrand, conn);
+                    DataTable dtBrand = new DataTable();
+                    daBrand.Fill(dtBrand);
+
+                    cmbVehicleBrand.DataSource = dtBrand;
+                    cmbVehicleBrand.DisplayMember = "BrandName";
+                    cmbVehicleBrand.ValueMember = "BrandID";
+
+                    // load vehicle types
+                    string queryType = "SELECT VehicleTypeID, VehicleTypeName FROM vehicletypes ORDER BY VehicleTypeName ASC";
+                    MySqlDataAdapter daType = new MySqlDataAdapter(queryType, conn);
+                    DataTable dtType = new DataTable();
+                    daType.Fill(dtType);
+
+                    cmbVehicleType.DataSource = dtType;
+                    cmbVehicleType.DisplayMember = "VehicleTypeName";
+                    cmbVehicleType.ValueMember = "VehicleTypeID";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading dropdown data: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                cmbVehicleBrand.SelectedIndex = -1;
+                cmbVehicleType.SelectedIndex = -1;
+            }
             ClearForm();
         }
-        // Method to load registry data into the DataGridView
+
         private void LoadRegistryData()
         {
             using (MySqlConnection conn = DbConnection.GetConnection())
             {
-                conn.Open();
-
-                string query = @"
-                SELECT
-                    c.CustomerID,
-                    v.VehicleID,
-                    c.CustomerName,
-                    c.Phone,
-                    c.Email,
-                    c.Address,
-                    v.VehicleNumber,
-                    vb.BrandName,
-                    v.Model,
-                    vt.VehicleTypeName,
-                    v.Mileage
-                FROM Vehicles v
-                INNER JOIN Customers c ON v.CustomerID = c.CustomerID
-                LEFT JOIN VehicleBrands vb ON v.BrandID = vb.BrandID
-                LEFT JOIN VehicleTypes vt ON v.VehicleTypeID = vt.VehicleTypeID
-                ORDER BY v.VehicleID DESC";
+                string query = @"SELECT v.VehicleID, c.CustomerID, c.CustomerName, c.Phone, c.Email, c.Address, 
+                                 v.VehicleNumber, v.BrandID, v.VehicleTypeID, v.Model, v.Mileage FROM vehicles v 
+                                 INNER JOIN customers c ON v.CustomerID = c.CustomerID ORDER BY v.VehicleID DESC";
 
                 MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-
                 dgvRegistry.DataSource = dt;
-
-                if (dgvRegistry.Columns.Contains("CustomerID"))
-                    dgvRegistry.Columns["CustomerID"].HeaderText = "Customer ID";
-
-                if (dgvRegistry.Columns.Contains("VehicleID"))
-                    dgvRegistry.Columns["VehicleID"].Visible = false;
             }
         }
-        // Method to get or create a brand ID based on the brand name
 
-        private int GetOrCreateBrandId(string brandName)
-        {
-            using (MySqlConnection conn = DbConnection.GetConnection())
-            {
-                conn.Open();
-                // Check if the brand already exists
-                string selectQuery = "SELECT BrandID FROM VehicleBrands WHERE BrandName = @brand";
-                MySqlCommand selectCmd = new MySqlCommand(selectQuery, conn);
-                selectCmd.Parameters.AddWithValue("@brand", brandName);
-
-                object result = selectCmd.ExecuteScalar();
-
-                if (result != null)
-                    return Convert.ToInt32(result);
-
-                string insertQuery = "INSERT INTO VehicleBrands (BrandName) VALUES (@brand)";
-                MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn);
-                insertCmd.Parameters.AddWithValue("@brand", brandName);
-                insertCmd.ExecuteNonQuery();
-
-                return Convert.ToInt32(insertCmd.LastInsertedId);
-            }
-        }
-        // Method to get the vehicle type ID based on the type name
-        private int GetVehicleTypeId(string typeName)
-        {
-            using (MySqlConnection conn = DbConnection.GetConnection())
-            {
-                conn.Open();
-                // Check if the vehicle type exists
-                string query = "SELECT VehicleTypeID FROM VehicleTypes WHERE VehicleTypeName = @type";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@type", typeName);
-
-                object result = cmd.ExecuteScalar();
-                return result == null ? 0 : Convert.ToInt32(result);
-            }
-        }
-        // Method to validate email format
+        // email validation
         private bool IsValidEmail(string email)
         {
-            if (string.IsNullOrEmpty(email)) return true;
-
             string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(email, pattern);
+            return System.Text.RegularExpressions.Regex.IsMatch(email, pattern);
         }
-        // Event handler for the Save button click event
+
+        // input validation
+        private bool ValidateInputs()
+        {
+            if (string.IsNullOrEmpty(txtCustomerName.Text) || string.IsNullOrEmpty(txtContactNo.Text) ||
+                string.IsNullOrEmpty(txtVehicleNo.Text) || cmbVehicleBrand.SelectedIndex == -1 || cmbVehicleType.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please fill all required fields.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // phone number validation
+            if (txtContactNo.Text.Trim().Length != 10)
+            {
+                MessageBox.Show("Phone number must be exactly 10 digits.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtContactNo.Focus();
+                return false;
+            }
+
+            //
+            if (!string.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                if (!IsValidEmail(txtEmail.Text.Trim()))
+                {
+                    MessageBox.Show("The email address you entered is invalid. Please use acorrect format (e.g., vinoth@gmail.com).", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEmail.Focus();
+                    return false;
+                }
+            }
+
+            return true; 
+        }
+
+        // Insert Vehicle and Customer
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string customerName = txtCustomerName.Text.Trim();
-            string phone = txtContactNo.Text.Trim();
-            string email = txtEmail.Text.Trim();
-            string address = txtAddress.Text.Trim();
-
-            string vehicleNo = txtVehicleNo.Text.Trim();
-            string brand = txtVehicleBrand.Text.Trim();
-            string model = txtVehicleModel.Text.Trim();
-            string vehicleType = cmbVehicleType.Text.Trim();
-
-            int mileage = 0;
-
-            int.TryParse(txtMileage.Text.Trim(), out mileage);
-
-            if (customerName == "" || phone == "" || vehicleNo == "" || brand == "" || model == "")
-            {
-                MessageBox.Show("Please fill all required customer and vehicle details.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (phone.Length < 10)
-            {
-                MessageBox.Show("Please enter a valid 10-digit contact number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!IsValidEmail(email))
-            {
-                MessageBox.Show("Please enter valid email address (e.g., example@gmail.com).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            if (!ValidateInputs()) return; 
 
             try
             {
-                int brandId = GetOrCreateBrandId(brand);
-                int vehicleTypeId = GetVehicleTypeId(vehicleType);
-
                 using (MySqlConnection conn = DbConnection.GetConnection())
                 {
                     conn.Open();
-                    MySqlTransaction transaction = conn.BeginTransaction();
 
-                    try
-                    {
-                        string customerQuery = @"
-                            INSERT INTO Customers (CustomerName, Phone, Email, Address)
-                            VALUES (@name, @phone, @email, @address)";
+                    // Insert customer
+                    string customerQuery = "INSERT INTO customers (CustomerName, Phone, Email, Address) VALUES (@name, @phone, @email, @address)";
+                    MySqlCommand customerCmd = new MySqlCommand(customerQuery, conn);
+                    customerCmd.Parameters.AddWithValue("@name", txtCustomerName.Text.Trim());
+                    customerCmd.Parameters.AddWithValue("@phone", txtContactNo.Text.Trim());
+                    customerCmd.Parameters.AddWithValue("@email", txtEmail.Text.Trim());
+                    customerCmd.Parameters.AddWithValue("@address", txtAddress.Text.Trim());
+                    customerCmd.ExecuteNonQuery();
 
-                        MySqlCommand customerCmd = new MySqlCommand(customerQuery, conn, transaction);
-                        customerCmd.Parameters.AddWithValue("@name", customerName);
-                        customerCmd.Parameters.AddWithValue("@phone", phone);
-                        customerCmd.Parameters.AddWithValue("@email", email);
-                        customerCmd.Parameters.AddWithValue("@address", address);
-                        customerCmd.ExecuteNonQuery();
+                    int customerId = Convert.ToInt32(customerCmd.LastInsertedId);
+                    int selectedBrandID = Convert.ToInt32(cmbVehicleBrand.SelectedValue);
+                    int selectedTypeID = Convert.ToInt32(cmbVehicleType.SelectedValue);
 
-                        int customerId = Convert.ToInt32(customerCmd.LastInsertedId);
+                    // Insert vehicle
+                    string vehicleQuery = @"INSERT INTO vehicles (CustomerID, VehicleNumber, BrandID, Model, VehicleTypeID, Mileage) 
+                                            VALUES (@customerId, @vehicleNo, @brandId, @model, @typeId, @mileage)";
 
-                        string vehicleQuery = @"
-                            INSERT INTO Vehicles 
-                            (CustomerID, VehicleNumber, BrandID, Model, VehicleTypeID, Mileage)
-                            VALUES
-                            (@customerId, @vehicleNo, @brandId, @model, @vehicleTypeId, @mileage)";
-
-                        MySqlCommand vehicleCmd = new MySqlCommand(vehicleQuery, conn, transaction);
-                        vehicleCmd.Parameters.AddWithValue("@customerId", customerId);
-                        vehicleCmd.Parameters.AddWithValue("@vehicleNo", vehicleNo);
-                        vehicleCmd.Parameters.AddWithValue("@brandId", brandId);
-                        vehicleCmd.Parameters.AddWithValue("@model", model);
-                        vehicleCmd.Parameters.AddWithValue("@vehicleTypeId", vehicleTypeId);
-                        vehicleCmd.Parameters.AddWithValue("@mileage", mileage);
-                        vehicleCmd.ExecuteNonQuery();
-
-                        transaction.Commit();
-
-                        MessageBox.Show("Registry saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadRegistryData();
-                        ClearForm();
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
+                    MySqlCommand vehicleCmd = new MySqlCommand(vehicleQuery, conn);
+                    vehicleCmd.Parameters.AddWithValue("@customerId", customerId);
+                    vehicleCmd.Parameters.AddWithValue("@vehicleNo", txtVehicleNo.Text.Trim());
+                    vehicleCmd.Parameters.AddWithValue("@brandId", selectedBrandID);
+                    vehicleCmd.Parameters.AddWithValue("@model", txtVehicleModel.Text.Trim());
+                    vehicleCmd.Parameters.AddWithValue("@typeId", selectedTypeID);
+                    vehicleCmd.Parameters.AddWithValue("@mileage", string.IsNullOrEmpty(txtMileage.Text) ? 0 : Convert.ToInt32(txtMileage.Text));
+                    vehicleCmd.ExecuteNonQuery();
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Database error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                MessageBox.Show("Saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadRegistryData();
+                ClearForm();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        // Event handler for the Update button click event
+
+        // Update data
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (selectedCustomerId == 0 || selectedVehicleId == 0)
-            {
-                MessageBox.Show("Please select a record from the table.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string email = txtEmail.Text.Trim();
-            string phone = txtContactNo.Text.Trim();
-
-            if (phone.Length < 10)
-            {
-                MessageBox.Show("Please enter a valid 10-digit contact number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!IsValidEmail(email))
-            {
-                MessageBox.Show("Please enter a valid email address.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            if (selectedCustomerId == 0 || selectedVehicleId == 0) return;
+            if (!ValidateInputs()) return;
 
             try
             {
-                int brandId = GetOrCreateBrandId(txtVehicleBrand.Text.Trim());
-                int vehicleTypeId = GetVehicleTypeId(cmbVehicleType.Text.Trim());
-
-                int mileage = 0;
-                int.TryParse(txtMileage.Text.Trim(), out mileage);
-
                 using (MySqlConnection conn = DbConnection.GetConnection())
                 {
                     conn.Open();
 
-                    string query = @"
-                        UPDATE Customers
-                        SET CustomerName = @customerName,
-                            Phone = @phone,
-                            Email = @email,
-                            Address = @address
-                        WHERE CustomerID = @customerId;
+                    int selectedBrandID = Convert.ToInt32(cmbVehicleBrand.SelectedValue);
+                    int selectedTypeID = Convert.ToInt32(cmbVehicleType.SelectedValue);
 
-                        UPDATE Vehicles
-                        SET VehicleNumber = @vehicleNo,
-                            BrandID = @brandId,
-                            Model = @model,
-                            VehicleTypeID = @vehicleTypeId,
-                            Mileage = @mileage
-                        WHERE VehicleID = @vehicleId;";
+                    string query = @"UPDATE customers SET CustomerName = @name, Phone = @phone, Email = @email, Address = @address WHERE CustomerID = @cId;
+                                     UPDATE vehicles SET VehicleNumber = @vNo, BrandID = @brandId, VehicleTypeID = @typeId, Model = @model, Mileage = @mileage WHERE VehicleID = @vId;";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                    cmd.Parameters.AddWithValue("@customerName", txtCustomerName.Text.Trim());
-                    cmd.Parameters.AddWithValue("@phone", phone);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@name", txtCustomerName.Text.Trim());
+                    cmd.Parameters.AddWithValue("@phone", txtContactNo.Text.Trim());
+                    cmd.Parameters.AddWithValue("@email", txtEmail.Text.Trim());
                     cmd.Parameters.AddWithValue("@address", txtAddress.Text.Trim());
-                    cmd.Parameters.AddWithValue("@customerId", selectedCustomerId);
-
-                    cmd.Parameters.AddWithValue("@vehicleNo", txtVehicleNo.Text.Trim());
-                    cmd.Parameters.AddWithValue("@brandId", brandId);
+                    cmd.Parameters.AddWithValue("@cId", selectedCustomerId);
+                    cmd.Parameters.AddWithValue("@vNo", txtVehicleNo.Text.Trim());
+                    cmd.Parameters.AddWithValue("@brandId", selectedBrandID);
+                    cmd.Parameters.AddWithValue("@typeId", selectedTypeID);
                     cmd.Parameters.AddWithValue("@model", txtVehicleModel.Text.Trim());
-                    cmd.Parameters.AddWithValue("@vehicleTypeId", vehicleTypeId);
-                    cmd.Parameters.AddWithValue("@mileage", mileage);
-                    cmd.Parameters.AddWithValue("@vehicleId", selectedVehicleId);
-
+                    cmd.Parameters.AddWithValue("@mileage", string.IsNullOrEmpty(txtMileage.Text) ? 0 : Convert.ToInt32(txtMileage.Text));
+                    cmd.Parameters.AddWithValue("@vId", selectedVehicleId);
                     cmd.ExecuteNonQuery();
                 }
 
-                MessageBox.Show("Registry updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadRegistryData();
                 ClearForm();
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Database error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        // Delete data
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (selectedVehicleId == 0)
+            if (selectedVehicleId == 0 || selectedCustomerId == 0)
             {
-                MessageBox.Show("Please select a vehicle from the table.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select a record from the list first.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to delete this vehicle and all its related history?",
-                "Confirm Delete",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-
-            if (result != DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to delete this vehicle and customer registration?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             try
@@ -324,71 +230,52 @@ namespace VehicleServiceSystem.UserControls
                 {
                     conn.Open();
 
-                    string query = "DELETE FROM vehicles WHERE VehicleID = @vehicleId";
+                    // delete vehicles
+                    string deleteVehicleQuery = "DELETE FROM vehicles WHERE VehicleID = @vId";
+                    MySqlCommand cmdVehicle = new MySqlCommand(deleteVehicleQuery, conn);
+                    cmdVehicle.Parameters.AddWithValue("@vId", selectedVehicleId);
+                    cmdVehicle.ExecuteNonQuery();
 
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@vehicleId", selectedVehicleId);
-                    cmd.ExecuteNonQuery();
+                    // delete customers
+                    string deleteCustomerQuery = "DELETE FROM customers WHERE CustomerID = @cId";
+                    MySqlCommand cmdCustomer = new MySqlCommand(deleteCustomerQuery, conn);
+                    cmdCustomer.Parameters.AddWithValue("@cId", selectedCustomerId);
+                    cmdCustomer.ExecuteNonQuery();
                 }
 
-                MessageBox.Show("Vehicle deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Deleted successfully from both tables.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadRegistryData();
                 ClearForm();
             }
-            catch (MySqlException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Cannot delete this vehicle: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Cannot delete this record.: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        // Event handler for the Search button click event
+        // Search data
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string search = txtSearch.Text.Trim();
-
             using (MySqlConnection conn = DbConnection.GetConnection())
             {
-                conn.Open();
-
-                string query = @"
-                    SELECT
-                        c.CustomerID,
-                        v.VehicleID,
-                        c.CustomerName,
-                        c.Phone,
-                        c.Email,
-                        c.Address,
-                        v.VehicleNumber,
-                        vb.BrandName,
-                        v.Model,
-                        vt.VehicleTypeName,
-                        v.Mileage
-                    FROM Vehicles v
-                    INNER JOIN Customers c ON v.CustomerID = c.CustomerID
-                    LEFT JOIN VehicleBrands vb ON v.BrandID = vb.BrandID
-                    LEFT JOIN VehicleTypes vt ON v.VehicleTypeID = vt.VehicleTypeID
-                    WHERE c.CustomerID LIKE @search
-                       OR c.CustomerName LIKE @search
-                       OR v.VehicleNumber LIKE @search
-                    ORDER BY v.VehicleID DESC";
+                string query = @"SELECT v.VehicleID, c.CustomerID, c.CustomerName, c.Phone, c.Email, c.Address, 
+                                 v.VehicleNumber, v.BrandID, v.VehicleTypeID, v.Model, v.Mileage FROM vehicles v 
+                                 INNER JOIN customers c ON v.CustomerID = c.CustomerID 
+                                 WHERE c.CustomerName LIKE @search OR v.VehicleNumber LIKE @search";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@search", "%" + search + "%");
-
+                cmd.Parameters.AddWithValue("@search", "%" + txtSearch.Text.Trim() + "%");
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-
                 dgvRegistry.DataSource = dt;
             }
         }
-        // Event handler for the DataGridView cell click event
+
         private void dgvRegistry_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
+            if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvRegistry.Rows[e.RowIndex];
-
             selectedCustomerId = Convert.ToInt32(row.Cells["CustomerID"].Value);
             selectedVehicleId = Convert.ToInt32(row.Cells["VehicleID"].Value);
 
@@ -397,50 +284,34 @@ namespace VehicleServiceSystem.UserControls
             txtContactNo.Text = row.Cells["Phone"].Value?.ToString();
             txtEmail.Text = row.Cells["Email"].Value?.ToString();
             txtAddress.Text = row.Cells["Address"].Value?.ToString();
-
             txtVehicleNo.Text = row.Cells["VehicleNumber"].Value?.ToString();
-            txtVehicleBrand.Text = row.Cells["BrandName"].Value?.ToString();
             txtVehicleModel.Text = row.Cells["Model"].Value?.ToString();
-            cmbVehicleType.Text = row.Cells["VehicleTypeName"].Value?.ToString();
             txtMileage.Text = row.Cells["Mileage"].Value?.ToString();
-        }
-        // Event handler for the Clear button click event
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
 
-        private void ClearForm()
-        {
-            selectedCustomerId = 0;
-            selectedVehicleId = 0;
+            cmbVehicleBrand.SelectedValue = row.Cells["BrandID"].Value;
 
-            txtCustomerId.Clear();
-            txtCustomerName.Clear();
-            txtContactNo.Clear();
-            txtEmail.Clear();
-            txtAddress.Clear();
-
-            txtVehicleNo.Clear();
-            txtVehicleBrand.Clear();
-            txtVehicleModel.Clear();
-            txtMileage.Clear();
-            txtSearch.Clear();
-
-            txtCustomerName.Focus();
-        }
-        // Event handler to restrict input to digits only for contact number and mileage
-        private void txtContactNo_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            if (dgvRegistry.Columns.Contains("VehicleTypeID"))
             {
-                e.Handled = true;
+                cmbVehicleType.SelectedValue = row.Cells["VehicleTypeID"].Value;
             }
         }
 
-        private void lblMileage_Click(object sender, EventArgs e)
-        {
+        private void btnClear_Click(object sender, EventArgs e) { ClearForm(); }
 
+        private void ClearForm()
+        {
+            selectedCustomerId = 0; selectedVehicleId = 0;
+            txtCustomerId.Clear(); txtCustomerName.Clear(); txtContactNo.Clear();
+            txtEmail.Clear(); txtAddress.Clear(); txtVehicleNo.Clear();
+            txtVehicleModel.Clear(); txtMileage.Clear(); txtSearch.Clear();
+            cmbVehicleBrand.SelectedIndex = -1;
+            cmbVehicleType.SelectedIndex = -1;
+            txtCustomerName.Focus();
+        }
+
+        private void txtContactNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) e.Handled = true;
         }
     }
 }

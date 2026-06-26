@@ -38,7 +38,7 @@ namespace VehicleServiceSystem
                 btnJobs.Visible = true;
                 btnStock.Visible = true;
                 btnBilling.Visible = true;
-                reportsbtn.Visible = true;
+                btnReport.Visible = true;
                 btnsettings.Visible = true;
             }
             else if (userRole == "Supervisor")
@@ -49,7 +49,7 @@ namespace VehicleServiceSystem
                 btnStock.Visible = true;
 
                 btnBilling.Visible = false;
-                reportsbtn.Visible = false;
+                btnReport.Visible = false;
                 btnsettings.Visible = false;
             }
             else if (userRole == "Cashier")
@@ -59,7 +59,7 @@ namespace VehicleServiceSystem
                 btnRegistry.Visible = false;
                 btnJobs.Visible = false;
                 btnStock.Visible = false;
-                reportsbtn.Visible = false;
+                btnReport.Visible = false;
                 btnsettings.Visible = false;
             }
             else if (userRole == "Mechanic")
@@ -70,7 +70,7 @@ namespace VehicleServiceSystem
                 btnRegistry.Visible = false;
                 btnStock.Visible = false;
                 btnBilling.Visible = false;
-                reportsbtn.Visible = false;
+                btnReport.Visible = false;
                 btnsettings.Visible = false;
             }
         }
@@ -135,6 +135,11 @@ namespace VehicleServiceSystem
         }
 
         private void btnCustomers_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dbpanel_Paint(object sender, PaintEventArgs e)
         {
 
         }

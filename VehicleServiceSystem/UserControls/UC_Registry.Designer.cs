@@ -76,11 +76,11 @@
             lblAddress = new Guna.UI2.WinForms.Guna2HtmlLabel();
             txtAddress = new Guna.UI2.WinForms.Guna2TextBox();
             pnlVehicle = new Guna.UI2.WinForms.Guna2Panel();
+            cmbVehicleBrand = new Guna.UI2.WinForms.Guna2ComboBox();
             lblVehicleSection = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblVehicleNo = new Guna.UI2.WinForms.Guna2HtmlLabel();
             txtVehicleNo = new Guna.UI2.WinForms.Guna2TextBox();
             lblVehicleBrand = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            txtVehicleBrand = new Guna.UI2.WinForms.Guna2TextBox();
             lblVehicleModel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             txtVehicleModel = new Guna.UI2.WinForms.Guna2TextBox();
             lblVehicleType = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -120,6 +120,7 @@
             mainPanel.ShadowDecoration.CustomizableEdges = customizableEdges38;
             mainPanel.Size = new Size(1400, 820);
             mainPanel.TabIndex = 0;
+            
             // 
             // lblTitle
             // 
@@ -365,11 +366,11 @@
             pnlVehicle.BackColor = Color.Transparent;
             pnlVehicle.BorderColor = Color.FromArgb(51, 65, 85);
             pnlVehicle.BorderThickness = 1;
+            pnlVehicle.Controls.Add(cmbVehicleBrand);
             pnlVehicle.Controls.Add(lblVehicleSection);
             pnlVehicle.Controls.Add(lblVehicleNo);
             pnlVehicle.Controls.Add(txtVehicleNo);
             pnlVehicle.Controls.Add(lblVehicleBrand);
-            pnlVehicle.Controls.Add(txtVehicleBrand);
             pnlVehicle.Controls.Add(lblVehicleModel);
             pnlVehicle.Controls.Add(txtVehicleModel);
             pnlVehicle.Controls.Add(lblVehicleType);
@@ -383,6 +384,25 @@
             pnlVehicle.ShadowDecoration.CustomizableEdges = customizableEdges28;
             pnlVehicle.Size = new Size(670, 278);
             pnlVehicle.TabIndex = 5;
+            // 
+            // cmbVehicleBrand
+            // 
+            cmbVehicleBrand.BackColor = Color.Transparent;
+            cmbVehicleBrand.BorderRadius = 10;
+            cmbVehicleBrand.CustomizableEdges = customizableEdges17;
+            cmbVehicleBrand.DrawMode = DrawMode.OwnerDrawFixed;
+            cmbVehicleBrand.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbVehicleBrand.FillColor = Color.FromArgb(15, 23, 42);
+            cmbVehicleBrand.FocusedColor = Color.FromArgb(94, 148, 255);
+            cmbVehicleBrand.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            cmbVehicleBrand.Font = new Font("Segoe UI", 10F);
+            cmbVehicleBrand.ForeColor = Color.White;
+            cmbVehicleBrand.ItemHeight = 30;
+            cmbVehicleBrand.Location = new Point(340, 94);
+            cmbVehicleBrand.Name = "cmbVehicleBrand";
+            cmbVehicleBrand.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            cmbVehicleBrand.Size = new Size(312, 36);
+            cmbVehicleBrand.TabIndex = 11;
             // 
             // lblVehicleSection
             // 
@@ -409,7 +429,7 @@
             // txtVehicleNo
             // 
             txtVehicleNo.BorderRadius = 10;
-            txtVehicleNo.CustomizableEdges = customizableEdges17;
+            txtVehicleNo.CustomizableEdges = customizableEdges19;
             txtVehicleNo.DefaultText = "";
             txtVehicleNo.FillColor = Color.FromArgb(15, 23, 42);
             txtVehicleNo.Font = new Font("Segoe UI", 10F);
@@ -420,7 +440,7 @@
             txtVehicleNo.PlaceholderForeColor = Color.Silver;
             txtVehicleNo.PlaceholderText = "Enter vehicle number";
             txtVehicleNo.SelectedText = "";
-            txtVehicleNo.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            txtVehicleNo.ShadowDecoration.CustomizableEdges = customizableEdges20;
             txtVehicleNo.Size = new Size(290, 42);
             txtVehicleNo.TabIndex = 2;
             // 
@@ -434,24 +454,6 @@
             lblVehicleBrand.Size = new Size(113, 25);
             lblVehicleBrand.TabIndex = 3;
             lblVehicleBrand.Text = "Vehicle Brand";
-            // 
-            // txtVehicleBrand
-            // 
-            txtVehicleBrand.BorderRadius = 10;
-            txtVehicleBrand.CustomizableEdges = customizableEdges19;
-            txtVehicleBrand.DefaultText = "";
-            txtVehicleBrand.FillColor = Color.FromArgb(15, 23, 42);
-            txtVehicleBrand.Font = new Font("Segoe UI", 10F);
-            txtVehicleBrand.ForeColor = Color.White;
-            txtVehicleBrand.Location = new Point(340, 87);
-            txtVehicleBrand.Margin = new Padding(3, 4, 3, 4);
-            txtVehicleBrand.Name = "txtVehicleBrand";
-            txtVehicleBrand.PlaceholderForeColor = Color.Silver;
-            txtVehicleBrand.PlaceholderText = "Ex: Toyota / Honda";
-            txtVehicleBrand.SelectedText = "";
-            txtVehicleBrand.ShadowDecoration.CustomizableEdges = customizableEdges20;
-            txtVehicleBrand.Size = new Size(312, 42);
-            txtVehicleBrand.TabIndex = 4;
             // 
             // lblVehicleModel
             // 
@@ -506,7 +508,6 @@
             cmbVehicleType.Font = new Font("Segoe UI", 10F);
             cmbVehicleType.ForeColor = Color.White;
             cmbVehicleType.ItemHeight = 30;
-            cmbVehicleType.Items.AddRange(new object[] { "Car", "Van", "SUV", "Bus", "Lorry", "Bike", "Three Wheeler" });
             cmbVehicleType.Location = new Point(340, 177);
             cmbVehicleType.Name = "cmbVehicleType";
             cmbVehicleType.ShadowDecoration.CustomizableEdges = customizableEdges24;
@@ -523,7 +524,6 @@
             lblMileage.Size = new Size(67, 25);
             lblMileage.TabIndex = 9;
             lblMileage.Text = "Mileage";
-            lblMileage.Click += lblMileage_Click;
             // 
             // txtMileage
             // 
@@ -704,7 +704,6 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel lblVehicleNo;
         private Guna.UI2.WinForms.Guna2TextBox txtVehicleNo;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblVehicleBrand;
-        private Guna.UI2.WinForms.Guna2TextBox txtVehicleBrand;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblVehicleModel;
         private Guna.UI2.WinForms.Guna2TextBox txtVehicleModel;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblVehicleType;
@@ -718,5 +717,6 @@
         private Guna.UI2.WinForms.Guna2Button btnDelete;
 
         private Guna.UI2.WinForms.Guna2DataGridView dgvRegistry;
+        private Guna.UI2.WinForms.Guna2ComboBox cmbVehicleBrand;
     }
 }

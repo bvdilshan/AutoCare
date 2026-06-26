@@ -17,7 +17,7 @@ namespace VehicleServiceSystem
         private void UC_Home_Load(object sender, EventArgs e)
         {
             LoadDashboardData();
-            
+
             LoadRecentJobs();
         }
         // Method to load data for the dashboard cards
@@ -85,6 +85,11 @@ namespace VehicleServiceSystem
         }
 
         private void pnlCard1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
         {
 
         }

@@ -174,7 +174,11 @@
             cmbReportType.Font = new Font("Segoe UI", 10F);
             cmbReportType.ForeColor = Color.White;
             cmbReportType.ItemHeight = 30;
-            cmbReportType.Items.AddRange(new object[] { "Daily Job Report", "Monthly Revenue Report", "Vehicle Service Report", "Inventory Report", "Mechanic Performance Report", "Billing Report" });
+            cmbReportType.Items.AddRange(new object[] {
+                    "Monthly Revenue Report",
+                    "Vehicle Service Report",
+                    "Inventory Stock Report"
+                });
             cmbReportType.Location = new Point(20, 55);
             cmbReportType.Name = "cmbReportType";
             cmbReportType.ShadowDecoration.CustomizableEdges = customizableEdges2;

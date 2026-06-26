@@ -251,7 +251,7 @@
             btnAddUser.Size = new Size(150, 45);
             btnAddUser.TabIndex = 4;
             btnAddUser.Text = "Save";
-            btnAddUser.Click += btnAddUser_Click_1;
+            
             // 
             // btnUpdateUser
             // 
@@ -266,7 +266,7 @@
             btnUpdateUser.Size = new Size(150, 45);
             btnUpdateUser.TabIndex = 5;
             btnUpdateUser.Text = "Update";
-            btnUpdateUser.Click += btnUpdateUser_Click_1;
+            
             // 
             // btnDeleteUser
             // 
@@ -281,7 +281,7 @@
             btnDeleteUser.Size = new Size(150, 45);
             btnDeleteUser.TabIndex = 6;
             btnDeleteUser.Text = "Deactivate";
-            btnDeleteUser.Click += btnDeleteUser_Click_1;
+           
             // 
             // btnClearUser
             // 

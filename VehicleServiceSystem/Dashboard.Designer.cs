@@ -17,32 +17,32 @@ namespace VehicleServiceSystem
 
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges29 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges30 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges31 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges32 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges33 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges34 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges37 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges38 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges39 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges40 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges49 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges50 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges45 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges46 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges47 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges48 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges51 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges52 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             SlideMenu = new Guna.UI2.WinForms.Guna2Panel();
             lblBrand = new Guna.UI2.WinForms.Guna2HtmlLabel();
             btnHome = new Guna.UI2.WinForms.Guna2Button();
@@ -50,7 +50,7 @@ namespace VehicleServiceSystem
             btnJobs = new Guna.UI2.WinForms.Guna2Button();
             btnStock = new Guna.UI2.WinForms.Guna2Button();
             btnBilling = new Guna.UI2.WinForms.Guna2Button();
-            reportsbtn = new Guna.UI2.WinForms.Guna2Button();
+            btnReport = new Guna.UI2.WinForms.Guna2Button();
             btnsettings = new Guna.UI2.WinForms.Guna2Button();
             logoutbtn = new Guna.UI2.WinForms.Guna2Button();
             topPanel = new Guna.UI2.WinForms.Guna2Panel();
@@ -70,15 +70,15 @@ namespace VehicleServiceSystem
             SlideMenu.Controls.Add(btnJobs);
             SlideMenu.Controls.Add(btnStock);
             SlideMenu.Controls.Add(btnBilling);
-            SlideMenu.Controls.Add(reportsbtn);
+            SlideMenu.Controls.Add(btnReport);
             SlideMenu.Controls.Add(btnsettings);
             SlideMenu.Controls.Add(logoutbtn);
-            SlideMenu.CustomizableEdges = customizableEdges17;
+            SlideMenu.CustomizableEdges = customizableEdges43;
             SlideMenu.Dock = DockStyle.Left;
             SlideMenu.FillColor = Color.FromArgb(15, 23, 42);
             SlideMenu.Location = new Point(0, 0);
             SlideMenu.Name = "SlideMenu";
-            SlideMenu.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            SlideMenu.ShadowDecoration.CustomizableEdges = customizableEdges44;
             SlideMenu.Size = new Size(220, 768);
             SlideMenu.TabIndex = 2;
             // 
@@ -95,13 +95,13 @@ namespace VehicleServiceSystem
             // 
             // btnHome
             // 
-            btnHome.CustomizableEdges = customizableEdges1;
+            btnHome.CustomizableEdges = customizableEdges27;
             btnHome.FillColor = Color.FromArgb(15, 23, 42);
             btnHome.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             btnHome.ForeColor = Color.White;
             btnHome.Location = new Point(15, 100);
             btnHome.Name = "btnHome";
-            btnHome.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btnHome.ShadowDecoration.CustomizableEdges = customizableEdges28;
             btnHome.Size = new Size(190, 40);
             btnHome.TabIndex = 1;
             btnHome.Text = "Home";
@@ -111,13 +111,13 @@ namespace VehicleServiceSystem
             // 
             // btnRegistry
             // 
-            btnRegistry.CustomizableEdges = customizableEdges3;
+            btnRegistry.CustomizableEdges = customizableEdges29;
             btnRegistry.FillColor = Color.FromArgb(15, 23, 42);
             btnRegistry.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             btnRegistry.ForeColor = Color.White;
             btnRegistry.Location = new Point(15, 145);
             btnRegistry.Name = "btnRegistry";
-            btnRegistry.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btnRegistry.ShadowDecoration.CustomizableEdges = customizableEdges30;
             btnRegistry.Size = new Size(190, 40);
             btnRegistry.TabIndex = 2;
             btnRegistry.Text = "Registry";
@@ -127,13 +127,13 @@ namespace VehicleServiceSystem
             // 
             // btnJobs
             // 
-            btnJobs.CustomizableEdges = customizableEdges5;
+            btnJobs.CustomizableEdges = customizableEdges31;
             btnJobs.FillColor = Color.FromArgb(15, 23, 42);
             btnJobs.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             btnJobs.ForeColor = Color.White;
             btnJobs.Location = new Point(15, 191);
             btnJobs.Name = "btnJobs";
-            btnJobs.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnJobs.ShadowDecoration.CustomizableEdges = customizableEdges32;
             btnJobs.Size = new Size(190, 40);
             btnJobs.TabIndex = 4;
             btnJobs.Text = "Jobs";
@@ -143,13 +143,13 @@ namespace VehicleServiceSystem
             // 
             // btnStock
             // 
-            btnStock.CustomizableEdges = customizableEdges7;
+            btnStock.CustomizableEdges = customizableEdges33;
             btnStock.FillColor = Color.FromArgb(15, 23, 42);
             btnStock.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             btnStock.ForeColor = Color.White;
             btnStock.Location = new Point(15, 228);
             btnStock.Name = "btnStock";
-            btnStock.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnStock.ShadowDecoration.CustomizableEdges = customizableEdges34;
             btnStock.Size = new Size(190, 40);
             btnStock.TabIndex = 6;
             btnStock.Text = "Stock";
@@ -159,13 +159,13 @@ namespace VehicleServiceSystem
             // 
             // btnBilling
             // 
-            btnBilling.CustomizableEdges = customizableEdges9;
+            btnBilling.CustomizableEdges = customizableEdges35;
             btnBilling.FillColor = Color.FromArgb(15, 23, 42);
             btnBilling.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             btnBilling.ForeColor = Color.White;
             btnBilling.Location = new Point(15, 274);
             btnBilling.Name = "btnBilling";
-            btnBilling.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnBilling.ShadowDecoration.CustomizableEdges = customizableEdges36;
             btnBilling.Size = new Size(190, 40);
             btnBilling.TabIndex = 7;
             btnBilling.Text = "Billing";
@@ -173,31 +173,31 @@ namespace VehicleServiceSystem
             btnBilling.TextOffset = new Point(20, 0);
             btnBilling.Click += btnBilling_Click;
             // 
-            // reportsbtn
+            // btnReport
             // 
-            reportsbtn.CustomizableEdges = customizableEdges11;
-            reportsbtn.FillColor = Color.FromArgb(15, 23, 42);
-            reportsbtn.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
-            reportsbtn.ForeColor = Color.White;
-            reportsbtn.Location = new Point(15, 320);
-            reportsbtn.Name = "reportsbtn";
-            reportsbtn.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            reportsbtn.Size = new Size(190, 40);
-            reportsbtn.TabIndex = 8;
-            reportsbtn.Text = "Reports";
-            reportsbtn.TextAlign = HorizontalAlignment.Left;
-            reportsbtn.TextOffset = new Point(20, 0);
-            reportsbtn.Click += guna2Button5_Click;
+            btnReport.CustomizableEdges = customizableEdges37;
+            btnReport.FillColor = Color.FromArgb(15, 23, 42);
+            btnReport.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            btnReport.ForeColor = Color.White;
+            btnReport.Location = new Point(15, 320);
+            btnReport.Name = "btnReport";
+            btnReport.ShadowDecoration.CustomizableEdges = customizableEdges38;
+            btnReport.Size = new Size(190, 40);
+            btnReport.TabIndex = 8;
+            btnReport.Text = "Reports";
+            btnReport.TextAlign = HorizontalAlignment.Left;
+            btnReport.TextOffset = new Point(20, 0);
+            btnReport.Click += guna2Button5_Click;
             // 
             // btnsettings
             // 
-            btnsettings.CustomizableEdges = customizableEdges13;
+            btnsettings.CustomizableEdges = customizableEdges39;
             btnsettings.FillColor = Color.FromArgb(15, 23, 42);
             btnsettings.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             btnsettings.ForeColor = Color.White;
             btnsettings.Location = new Point(15, 366);
             btnsettings.Name = "btnsettings";
-            btnsettings.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            btnsettings.ShadowDecoration.CustomizableEdges = customizableEdges40;
             btnsettings.Size = new Size(190, 40);
             btnsettings.TabIndex = 9;
             btnsettings.Text = "Settings";
@@ -208,13 +208,13 @@ namespace VehicleServiceSystem
             // logoutbtn
             // 
             logoutbtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            logoutbtn.CustomizableEdges = customizableEdges15;
+            logoutbtn.CustomizableEdges = customizableEdges41;
             logoutbtn.FillColor = Color.FromArgb(239, 68, 68);
             logoutbtn.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             logoutbtn.ForeColor = Color.White;
             logoutbtn.Location = new Point(15, 705);
             logoutbtn.Name = "logoutbtn";
-            logoutbtn.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            logoutbtn.ShadowDecoration.CustomizableEdges = customizableEdges42;
             logoutbtn.Size = new Size(190, 45);
             logoutbtn.TabIndex = 10;
             logoutbtn.Text = "Logout";
@@ -225,12 +225,12 @@ namespace VehicleServiceSystem
             topPanel.Controls.Add(lblPageTitle);
             topPanel.Controls.Add(guna2ControlBox1);
             topPanel.Controls.Add(guna2ControlBox2);
-            topPanel.CustomizableEdges = customizableEdges23;
+            topPanel.CustomizableEdges = customizableEdges49;
             topPanel.Dock = DockStyle.Top;
             topPanel.FillColor = Color.FromArgb(15, 23, 42);
             topPanel.Location = new Point(220, 0);
             topPanel.Name = "topPanel";
-            topPanel.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            topPanel.ShadowDecoration.CustomizableEdges = customizableEdges50;
             topPanel.Size = new Size(1060, 70);
             topPanel.TabIndex = 1;
             // 
@@ -248,12 +248,12 @@ namespace VehicleServiceSystem
             // guna2ControlBox1
             // 
             guna2ControlBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            guna2ControlBox1.CustomizableEdges = customizableEdges19;
+            guna2ControlBox1.CustomizableEdges = customizableEdges45;
             guna2ControlBox1.FillColor = Color.FromArgb(239, 68, 68);
             guna2ControlBox1.IconColor = Color.White;
             guna2ControlBox1.Location = new Point(1005, 15);
             guna2ControlBox1.Name = "guna2ControlBox1";
-            guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            guna2ControlBox1.ShadowDecoration.CustomizableEdges = customizableEdges46;
             guna2ControlBox1.Size = new Size(45, 35);
             guna2ControlBox1.TabIndex = 1;
             // 
@@ -261,25 +261,26 @@ namespace VehicleServiceSystem
             // 
             guna2ControlBox2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             guna2ControlBox2.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
-            guna2ControlBox2.CustomizableEdges = customizableEdges21;
+            guna2ControlBox2.CustomizableEdges = customizableEdges47;
             guna2ControlBox2.FillColor = Color.FromArgb(30, 41, 59);
             guna2ControlBox2.IconColor = Color.White;
             guna2ControlBox2.Location = new Point(955, 15);
             guna2ControlBox2.Name = "guna2ControlBox2";
-            guna2ControlBox2.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            guna2ControlBox2.ShadowDecoration.CustomizableEdges = customizableEdges48;
             guna2ControlBox2.Size = new Size(45, 35);
             guna2ControlBox2.TabIndex = 2;
             // 
             // dbpanel
             // 
-            dbpanel.CustomizableEdges = customizableEdges25;
+            dbpanel.CustomizableEdges = customizableEdges51;
             dbpanel.Dock = DockStyle.Fill;
             dbpanel.FillColor = Color.FromArgb(15, 23, 42);
             dbpanel.Location = new Point(220, 70);
             dbpanel.Name = "dbpanel";
-            dbpanel.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            dbpanel.ShadowDecoration.CustomizableEdges = customizableEdges52;
             dbpanel.Size = new Size(1060, 698);
             dbpanel.TabIndex = 0;
+            dbpanel.Paint += dbpanel_Paint;
             // 
             // Dashboard
             // 
@@ -311,7 +312,7 @@ namespace VehicleServiceSystem
         private Guna.UI2.WinForms.Guna2Button btnJobs;
         private Guna.UI2.WinForms.Guna2Button btnStock;
         private Guna.UI2.WinForms.Guna2Button btnBilling;
-        private Guna.UI2.WinForms.Guna2Button reportsbtn;
+        private Guna.UI2.WinForms.Guna2Button btnReport;
         private Guna.UI2.WinForms.Guna2Button btnsettings;
         private Guna.UI2.WinForms.Guna2Button logoutbtn;
 

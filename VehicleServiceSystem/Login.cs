@@ -11,20 +11,20 @@ namespace VehicleServiceSystem
         {
             InitializeComponent();
 
+            // මුද්‍රපදය (Password) ටයිප් කරද්දී වෙනත් අයට නොපෙනී '*' ලෙස පෙන්වීමට
             pwordbox.PasswordChar = '*';
         }
-        // Event handler for the login button click event
+
+        // 1. ඇතුළත් වීමේ බොත්තම (Login Button) ක්ලික් කළ විට
         private void signBtn_Click(object sender, EventArgs e)
         {
             string username = unamebox.Text.Trim();
             string password = pwordbox.Text.Trim();
 
+            // හිස්තැන් තිබේදැයි පරික්ෂා කිරීම (Validation)
             if (username == "" || password == "")
             {
-                MessageBox.Show("Please enter username and password.",
-                    "Login Required",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter username and password.", "Login Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -34,17 +34,11 @@ namespace VehicleServiceSystem
                 {
                     conn.Open();
 
-                    string query = @"
-                        SELECT 
-                            u.UserID,
-                            u.Username,
-                            u.FullName,
-                            r.RoleName
-                        FROM Users u
-                        INNER JOIN Roles r ON u.RoleID = r.RoleID
-                        WHERE u.Username = @username
-                          AND u.PasswordHash = @password
-                          AND u.IsActive = 1";
+                    // පරිශීලකයා නිවැරදිද, සක්‍රීයද (IsActive=1) සහ ඔහුගේ Role එක මොකක්ද කියා බලන Query එක
+                    string query = "SELECT u.UserID, u.Username, u.FullName, r.RoleName " +
+                                   "FROM Users u " +
+                                   "INNER JOIN Roles r ON u.RoleID = r.RoleID " +
+                                   "WHERE u.Username = @username AND u.PasswordHash = @password AND u.IsActive = 1";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -53,29 +47,23 @@ namespace VehicleServiceSystem
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
+                            // දත්ත ගැලපේ නම් (User කෙනෙක් හමු වුණා නම්)
                             if (reader.Read())
                             {
-                                int userId = Convert.ToInt32(reader["UserID"]);
                                 string role = reader["RoleName"].ToString();
                                 string fullName = reader["FullName"].ToString();
 
-                                MessageBox.Show(
-                                    "Login successful as " + role,
-                                    "Success",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
+                                MessageBox.Show("Login successful as " + role, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                                // Dashboard එකට අදාළ Role එක යවා Dashboard එක විවෘත කිරීම
                                 Dashboard dashboard = new Dashboard(role);
                                 dashboard.Show();
-                                this.Hide();
+                                this.Hide(); // Login Form එක සඟවා තැබීම
                             }
                             else
                             {
-                                MessageBox.Show(
-                                    "Invalid username or password.",
-                                    "Login Failed",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
+                                // දත්ත වැරදි නම්
+                                MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                                 pwordbox.Clear();
                                 pwordbox.Focus();
@@ -86,61 +74,14 @@ namespace VehicleServiceSystem
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Database connection error:\n" + ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Database connection error:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        //Exit Button
         private void exitBtn_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
-        private void unamebox_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void pwordbox_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void guna2PictureBox1_Click_1(object sender, EventArgs e)
-        {
-        }
-
-        private void guna2HtmlLabel2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void guna2HtmlLabel3_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void guna2HtmlLabel4_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void guna2HtmlLabel5_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void lblTagline_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2PictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlLabel2_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }
-//guna2Button1

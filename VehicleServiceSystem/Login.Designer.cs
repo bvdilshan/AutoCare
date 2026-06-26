@@ -120,7 +120,7 @@ namespace VehicleServiceSystem
             lblTagline.Size = new Size(270, 27);
             lblTagline.TabIndex = 2;
             lblTagline.Text = "Precision service,\nexceptional care.";
-            lblTagline.Click += lblTagline_Click;
+            
             // 
             // loginCard
             // 

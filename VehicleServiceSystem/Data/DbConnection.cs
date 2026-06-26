@@ -9,8 +9,7 @@ namespace VehicleServiceSystem.Data
     {
         // Connection string to connect to the MySQL database
         private static string connectionString =
-            "server=localhost;database=VEHICLESERVICEDB;uid=root;pwd=1234;";
-        // Method to get a new MySqlConnection object
+            "server=localhost;database=autocaredb;uid=root;pwd=1234;";
         public static MySqlConnection GetConnection()
 
         {

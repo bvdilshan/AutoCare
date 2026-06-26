@@ -1,0 +1,350 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema autocaredb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema autocaredb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `autocaredb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `autocaredb` ;
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`roles` (
+  `RoleID` INT NOT NULL AUTO_INCREMENT,
+  `RoleName` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`RoleID`),
+  UNIQUE INDEX `RoleName` (`RoleName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`users` (
+  `UserID` INT NOT NULL AUTO_INCREMENT,
+  `Username` VARCHAR(100) NOT NULL,
+  `PasswordHash` VARCHAR(255) NOT NULL,
+  `FullName` VARCHAR(150) NOT NULL,
+  `Phone` VARCHAR(20) NULL DEFAULT NULL,
+  `RoleID` INT NOT NULL,
+  `IsActive` TINYINT(1) NOT NULL DEFAULT '1',
+  `CreatedAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`UserID`),
+  UNIQUE INDEX `Username` (`Username` ASC) VISIBLE,
+  INDEX `fk_users_roles` (`RoleID` ASC) VISIBLE,
+  CONSTRAINT `fk_users_roles`
+    FOREIGN KEY (`RoleID`)
+    REFERENCES `autocaredb`.`roles` (`RoleID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 12
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`servicetypes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`servicetypes` (
+  `ServiceTypeID` INT NOT NULL AUTO_INCREMENT,
+  `ServiceName` VARCHAR(100) NOT NULL,
+  `DefaultCharge` DECIMAL(10,2) NULL DEFAULT '0.00',
+  PRIMARY KEY (`ServiceTypeID`),
+  UNIQUE INDEX `ServiceName` (`ServiceName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`jobstatus`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`jobstatus` (
+  `StatusID` INT NOT NULL AUTO_INCREMENT,
+  `StatusName` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`StatusID`),
+  UNIQUE INDEX `StatusName` (`StatusName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`vehiclebrands`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`vehiclebrands` (
+  `BrandID` INT NOT NULL AUTO_INCREMENT,
+  `BrandName` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`BrandID`),
+  UNIQUE INDEX `BrandName` (`BrandName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 17
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`customers`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`customers` (
+  `CustomerID` INT NOT NULL AUTO_INCREMENT,
+  `CustomerName` VARCHAR(150) NOT NULL,
+  `Phone` VARCHAR(20) NOT NULL,
+  `Email` VARCHAR(150) NULL DEFAULT NULL,
+  `Address` VARCHAR(255) NULL DEFAULT NULL,
+  `CreatedAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`CustomerID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 42
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`vehicletypes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`vehicletypes` (
+  `VehicleTypeID` INT NOT NULL AUTO_INCREMENT,
+  `VehicleTypeName` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`VehicleTypeID`),
+  UNIQUE INDEX `VehicleTypeName` (`VehicleTypeName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`vehicles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`vehicles` (
+  `VehicleID` INT NOT NULL AUTO_INCREMENT,
+  `CustomerID` INT NOT NULL,
+  `VehicleNumber` VARCHAR(50) NOT NULL,
+  `BrandID` INT NULL DEFAULT NULL,
+  `Model` VARCHAR(100) NULL DEFAULT NULL,
+  `VehicleTypeID` INT NULL DEFAULT NULL,
+  `Mileage` INT NULL DEFAULT '0',
+  `CreatedAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`VehicleID`),
+  UNIQUE INDEX `VehicleNumber` (`VehicleNumber` ASC) VISIBLE,
+  INDEX `fk_vehicles_customers` (`CustomerID` ASC) VISIBLE,
+  INDEX `fk_vehicles_brands` (`BrandID` ASC) VISIBLE,
+  INDEX `fk_vehicles_types` (`VehicleTypeID` ASC) VISIBLE,
+  CONSTRAINT `fk_vehicles_brands`
+    FOREIGN KEY (`BrandID`)
+    REFERENCES `autocaredb`.`vehiclebrands` (`BrandID`),
+  CONSTRAINT `fk_vehicles_customers`
+    FOREIGN KEY (`CustomerID`)
+    REFERENCES `autocaredb`.`customers` (`CustomerID`),
+  CONSTRAINT `fk_vehicles_types`
+    FOREIGN KEY (`VehicleTypeID`)
+    REFERENCES `autocaredb`.`vehicletypes` (`VehicleTypeID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 42
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`jobs`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`jobs` (
+  `JobID` INT NOT NULL AUTO_INCREMENT,
+  `VehicleID` INT NOT NULL,
+  `ServiceTypeID` INT NOT NULL,
+  `MechanicID` INT NULL DEFAULT NULL,
+  `StatusID` INT NOT NULL,
+  `ServiceDate` DATE NOT NULL,
+  `Description` TEXT NULL DEFAULT NULL,
+  `BillingStatus` VARCHAR(50) NOT NULL DEFAULT 'Not Ready',
+  `CompletedAt` DATETIME NULL DEFAULT NULL,
+  `CreatedAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`JobID`),
+  INDEX `fk_jobs_servicetypes` (`ServiceTypeID` ASC) VISIBLE,
+  INDEX `fk_jobs_status` (`StatusID` ASC) VISIBLE,
+  INDEX `fk_jobs_mechanic` (`MechanicID` ASC) VISIBLE,
+  INDEX `fk_jobs_vehicles` (`VehicleID` ASC) VISIBLE,
+  CONSTRAINT `fk_jobs_mechanic`
+    FOREIGN KEY (`MechanicID`)
+    REFERENCES `autocaredb`.`users` (`UserID`),
+  CONSTRAINT `fk_jobs_servicetypes`
+    FOREIGN KEY (`ServiceTypeID`)
+    REFERENCES `autocaredb`.`servicetypes` (`ServiceTypeID`),
+  CONSTRAINT `fk_jobs_status`
+    FOREIGN KEY (`StatusID`)
+    REFERENCES `autocaredb`.`jobstatus` (`StatusID`),
+  CONSTRAINT `fk_jobs_vehicles`
+    FOREIGN KEY (`VehicleID`)
+    REFERENCES `autocaredb`.`vehicles` (`VehicleID`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 17
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`bills`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`bills` (
+  `BillID` INT NOT NULL AUTO_INCREMENT,
+  `JobID` INT NOT NULL,
+  `SubTotal` DECIMAL(10,2) NOT NULL DEFAULT '0.00',
+  `Tax` DECIMAL(10,2) NOT NULL DEFAULT '0.00',
+  `GrandTotal` DECIMAL(10,2) NOT NULL DEFAULT '0.00',
+  `PaymentMethod` VARCHAR(100) NULL DEFAULT NULL,
+  `BillDate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`BillID`),
+  UNIQUE INDEX `JobID` (`JobID` ASC) VISIBLE,
+  CONSTRAINT `fk_bills_jobs`
+    FOREIGN KEY (`JobID`)
+    REFERENCES `autocaredb`.`jobs` (`JobID`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 13
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`billitems`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`billitems` (
+  `BillItemID` INT NOT NULL AUTO_INCREMENT,
+  `BillID` INT NOT NULL,
+  `PartName` VARCHAR(150) NOT NULL,
+  `Quantity` INT NOT NULL,
+  `UnitPrice` DECIMAL(10,2) NOT NULL,
+  `Total` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`BillItemID`),
+  INDEX `fk_billitems_bills` (`BillID` ASC) VISIBLE,
+  CONSTRAINT `fk_billitems_bills`
+    FOREIGN KEY (`BillID`)
+    REFERENCES `autocaredb`.`bills` (`BillID`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 17
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`stockcategories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`stockcategories` (
+  `CategoryID` INT NOT NULL AUTO_INCREMENT,
+  `CategoryName` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`CategoryID`),
+  UNIQUE INDEX `CategoryName` (`CategoryName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 10
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`stockitems`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`stockitems` (
+  `ItemID` INT NOT NULL AUTO_INCREMENT,
+  `ItemName` VARCHAR(150) NOT NULL,
+  `CategoryID` INT NOT NULL,
+  `Price` DECIMAL(10,2) NOT NULL DEFAULT '0.00',
+  `Quantity` INT NOT NULL DEFAULT '0',
+  `ReorderLevel` INT NOT NULL DEFAULT '5',
+  `CreatedAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ItemID`),
+  INDEX `fk_stockitems_categories` (`CategoryID` ASC) VISIBLE,
+  CONSTRAINT `fk_stockitems_categories`
+    FOREIGN KEY (`CategoryID`)
+    REFERENCES `autocaredb`.`stockcategories` (`CategoryID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 33
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`jobparts`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`jobparts` (
+  `JobPartID` INT NOT NULL AUTO_INCREMENT,
+  `JobID` INT NOT NULL,
+  `ItemID` INT NOT NULL,
+  `Quantity` INT NOT NULL,
+  `Price` DECIMAL(10,2) NOT NULL,
+  `CreatedAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`JobPartID`),
+  INDEX `fk_jobparts_stockitems` (`ItemID` ASC) VISIBLE,
+  INDEX `fk_jobparts_jobs` (`JobID` ASC) VISIBLE,
+  CONSTRAINT `fk_jobparts_jobs`
+    FOREIGN KEY (`JobID`)
+    REFERENCES `autocaredb`.`jobs` (`JobID`)
+    ON DELETE CASCADE,
+  CONSTRAINT `fk_jobparts_stockitems`
+    FOREIGN KEY (`ItemID`)
+    REFERENCES `autocaredb`.`stockitems` (`ItemID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 9
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`paymentmethods`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`paymentmethods` (
+  `MethodID` INT NOT NULL AUTO_INCREMENT,
+  `MethodName` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`MethodID`),
+  UNIQUE INDEX `MethodName` (`MethodName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `autocaredb`.`payments`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `autocaredb`.`payments` (
+  `PaymentID` INT NOT NULL AUTO_INCREMENT,
+  `InvoiceID` INT NOT NULL,
+  `MethodID` INT NOT NULL,
+  `Amount` DECIMAL(10,2) NOT NULL,
+  `PaidAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`PaymentID`),
+  INDEX `fk_payments_methods` (`MethodID` ASC) VISIBLE,
+  INDEX `fk_payments_bills` (`InvoiceID` ASC) VISIBLE,
+  CONSTRAINT `fk_payments_bills`
+    FOREIGN KEY (`InvoiceID`)
+    REFERENCES `autocaredb`.`bills` (`BillID`)
+    ON DELETE CASCADE,
+  CONSTRAINT `fk_payments_methods`
+    FOREIGN KEY (`MethodID`)
+    REFERENCES `autocaredb`.`paymentmethods` (`MethodID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 14
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
