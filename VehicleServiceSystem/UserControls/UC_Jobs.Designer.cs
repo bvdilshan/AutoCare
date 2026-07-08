@@ -528,52 +528,67 @@ namespace VehicleServiceSystem.UserControls
             // 
             dgvUsedParts.AllowUserToAddRows = false;
             dgvUsedParts.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.White;
+
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(30, 41, 59);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(51, 65, 85);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dgvUsedParts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+
             dgvUsedParts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUsedParts.BackgroundColor = Color.FromArgb(30, 41, 59);
+
             dataGridViewCellStyle2.BackColor = Color.FromArgb(14, 165, 233);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
             dgvUsedParts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvUsedParts.ColumnHeadersHeight = 36;
+
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.FromArgb(30, 41, 59);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9.5F);
             dataGridViewCellStyle3.ForeColor = Color.White;
             dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(51, 65, 85);
             dataGridViewCellStyle3.SelectionForeColor = Color.White;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dgvUsedParts.DefaultCellStyle = dataGridViewCellStyle3;
+
             dgvUsedParts.GridColor = Color.FromArgb(51, 65, 85);
             dgvUsedParts.Location = new Point(20, 160);
             dgvUsedParts.Name = "dgvUsedParts";
             dgvUsedParts.ReadOnly = true;
             dgvUsedParts.RowHeadersVisible = false;
             dgvUsedParts.RowHeadersWidth = 51;
-            dgvUsedParts.RowTemplate.Height = 32;
+            dgvUsedParts.RowTemplate.Height = 35;
             dgvUsedParts.Size = new Size(525, 70);
             dgvUsedParts.TabIndex = 10;
-            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
-            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.Font = null;
-            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.Empty;
-            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = Color.Empty;
-            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = Color.Empty;
+
+            dgvUsedParts.Theme = Guna.UI2.WinForms.Enums.DataGridViewPresetThemes.Dark;
+            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.BackColor = Color.FromArgb(30, 41, 59);
+            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.Font = new Font("Segoe UI", 9.5F);
+            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.White;
+            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = Color.FromArgb(51, 65, 85);
+            dgvUsedParts.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = Color.White;
+
             dgvUsedParts.ThemeStyle.BackColor = Color.FromArgb(30, 41, 59);
             dgvUsedParts.ThemeStyle.GridColor = Color.FromArgb(51, 65, 85);
-            dgvUsedParts.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
+
+            dgvUsedParts.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(14, 165, 233);
             dgvUsedParts.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvUsedParts.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
+            dgvUsedParts.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             dgvUsedParts.ThemeStyle.HeaderStyle.ForeColor = Color.White;
             dgvUsedParts.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvUsedParts.ThemeStyle.HeaderStyle.Height = 36;
+
             dgvUsedParts.ThemeStyle.ReadOnly = true;
-            dgvUsedParts.ThemeStyle.RowsStyle.BackColor = Color.White;
+
+            dgvUsedParts.ThemeStyle.RowsStyle.BackColor = Color.FromArgb(30, 41, 59);
             dgvUsedParts.ThemeStyle.RowsStyle.BorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvUsedParts.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9F);
-            dgvUsedParts.ThemeStyle.RowsStyle.ForeColor = Color.FromArgb(71, 69, 94);
-            dgvUsedParts.ThemeStyle.RowsStyle.Height = 32;
-            dgvUsedParts.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            dgvUsedParts.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            dgvUsedParts.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9.5F);
+            dgvUsedParts.ThemeStyle.RowsStyle.ForeColor = Color.White;
+            dgvUsedParts.ThemeStyle.RowsStyle.Height = 35;
+            dgvUsedParts.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(51, 65, 85);
+            dgvUsedParts.ThemeStyle.RowsStyle.SelectionForeColor = Color.White;
             // 
             // lblPartsTotalText
             // 
@@ -806,34 +821,7 @@ namespace VehicleServiceSystem.UserControls
             pnlTable.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvJobs).EndInit();
             ResumeLayout(false);
-            //    // 
-            //    // lblPriority
-            //    // 
-            //    lblPriority.BackColor = Color.Transparent;
-            //    lblPriority.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            //    lblPriority.ForeColor = Color.White;
-            //    lblPriority.Location = new Point(20, 411);
-            //    lblPriority.Name = "lblPriority";
-            //    lblPriority.Size = new Size(60, 25);
-            //    lblPriority.TabIndex = 8;
-            //    lblPriority.Text = "Priority";
-            //    // 
-            //    // cmbPriority
-            //    // 
-            //    cmbPriority.BackColor = Color.Transparent;
-            //    cmbPriority.BorderRadius = 10;
-            //    cmbPriority.DrawMode = DrawMode.OwnerDrawFixed;
-            //    cmbPriority.DropDownStyle = ComboBoxStyle.DropDownList;
-            //    cmbPriority.FillColor = Color.FromArgb(15, 23, 42);
-            //    cmbPriority.FocusedColor = Color.Empty;
-            //    cmbPriority.Font = new Font("Segoe UI", 10F);
-            //    cmbPriority.ForeColor = Color.White;
-            //    cmbPriority.ItemHeight = 30;
-            //    cmbPriority.Location = new Point(20, 441);
-            //    cmbPriority.Name = "cmbPriority";
-            //    cmbPriority.Size = new Size(320, 36);
-            //    cmbPriority.TabIndex = 9;
-            //}
+          
         }
 
         #endregion

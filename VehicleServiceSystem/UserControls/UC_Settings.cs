@@ -19,8 +19,6 @@ namespace VehicleServiceSystem.UserControls
             btnSearchUser.Click += btnSearchUser_Click;
             btnClearUser.Click += btnClearUser_Click;
             dgvUserList.CellClick += dgvUserList_CellClick;
-
-            // stop write string in phonenumber section
             txtPhone.KeyPress += (s, e) => e.Handled = !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar);
         }
 
@@ -44,7 +42,7 @@ namespace VehicleServiceSystem.UserControls
 
                     cmbRole.DataSource = dt;
                     cmbRole.DisplayMember = "RoleName";
-                    cmbRole.ValueMember = "RoleID"; 
+                    cmbRole.ValueMember = "RoleID";
                 }
             }
             catch (Exception ex)
@@ -54,7 +52,6 @@ namespace VehicleServiceSystem.UserControls
             cmbRole.SelectedIndex = -1;
         }
 
-        // load grid
         private void LoadUsers()
         {
             try
@@ -93,6 +90,20 @@ namespace VehicleServiceSystem.UserControls
                 return false;
             }
 
+            if (!isUpdate && txtPassword.Text.Trim().Length < 8)
+            {
+                MessageBox.Show("Password must be at least 8 characters long.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPassword.Focus();
+                return false;
+            }
+
+            if (isUpdate && !string.IsNullOrEmpty(txtPassword.Text) && txtPassword.Text.Trim().Length < 8)
+            {
+                MessageBox.Show("New password must be at least 8 characters long.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPassword.Focus();
+                return false;
+            }
+
             if (!string.IsNullOrEmpty(txtPhone.Text) && txtPhone.Text.Trim().Length != 10)
             {
                 MessageBox.Show("Phone number must be exactly 10 digits.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -113,7 +124,6 @@ namespace VehicleServiceSystem.UserControls
                 {
                     conn.Open();
 
- 
                     MySqlCommand checkCmd = new MySqlCommand("SELECT COUNT(*) FROM users WHERE username = @username", conn);
                     checkCmd.Parameters.AddWithValue("@username", txtUsername.Text.Trim());
                     if (Convert.ToInt32(checkCmd.ExecuteScalar()) > 0)
@@ -121,7 +131,6 @@ namespace VehicleServiceSystem.UserControls
                         MessageBox.Show("This username already exists!", "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
 
                     string query = @"INSERT INTO users (Username, PasswordHash, FullName, Phone, RoleID, IsActive) 
                                      VALUES (@username, @password, @fullname, @phone, @roleId, 1)";
@@ -131,7 +140,7 @@ namespace VehicleServiceSystem.UserControls
                     cmd.Parameters.AddWithValue("@password", txtPassword.Text.Trim());
                     cmd.Parameters.AddWithValue("@fullname", txtUsername.Text.Trim());
                     cmd.Parameters.AddWithValue("@phone", txtPhone.Text.Trim());
-                    cmd.Parameters.AddWithValue("@roleId", cmbRole.SelectedValue); 
+                    cmd.Parameters.AddWithValue("@roleId", cmbRole.SelectedValue);
                     cmd.ExecuteNonQuery();
                 }
 
@@ -157,7 +166,6 @@ namespace VehicleServiceSystem.UserControls
                     conn.Open();
                     string password = txtPassword.Text.Trim();
 
-
                     string query = "UPDATE users SET Username = @username, Phone = @phone, RoleID = @roleId " +
                                    (password != "" ? ", PasswordHash = @password " : "") +
                                    "WHERE UserID = @userId";
@@ -176,6 +184,7 @@ namespace VehicleServiceSystem.UserControls
                 MessageBox.Show("User updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadUsers();
                 ClearForm();
+                
             }
             catch (Exception ex)
             {
@@ -220,6 +229,7 @@ namespace VehicleServiceSystem.UserControls
             lblEmpID.Text = "USR" + selectedUserId.ToString("000");
             txtUsername.Text = row.Cells["Username"].Value?.ToString();
             txtPhone.Text = row.Cells["Phone"].Value?.ToString();
+            btnAddUser.Enabled = false;
 
             if (dgvUserList.Columns.Contains("RoleID"))
                 cmbRole.SelectedValue = row.Cells["RoleID"].Value;
@@ -239,7 +249,7 @@ namespace VehicleServiceSystem.UserControls
                     string query = @"SELECT u.UserID, u.Username, u.Phone, r.RoleName, u.RoleID, u.IsActive 
                                      FROM users u 
                                      INNER JOIN roles r ON u.RoleID = r.RoleID 
-                                     WHERE u.Username LIKE @search OR r.RoleName LIKE @search 
+                                     WHERE u.Username LIKE @search 
                                      ORDER BY u.UserID DESC";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -267,9 +277,9 @@ namespace VehicleServiceSystem.UserControls
             txtPassword.Clear();
             txtPhone.Clear();
             txtSearchUser.Clear();
-
-            if (cmbRole.Items.Count > 0) cmbRole.SelectedIndex = 0;
+            cmbRole.SelectedIndex = -1;
             txtUsername.Focus();
+            btnAddUser.Enabled = true;
         }
     }
 }

@@ -99,7 +99,6 @@ namespace VehicleServiceSystem.UserControls
                 return false;
             }
 
-            // phone number validation
             if (txtContactNo.Text.Trim().Length != 10)
             {
                 MessageBox.Show("Phone number must be exactly 10 digits.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -107,7 +106,7 @@ namespace VehicleServiceSystem.UserControls
                 return false;
             }
 
-            //
+            
             if (!string.IsNullOrWhiteSpace(txtEmail.Text))
             {
                 if (!IsValidEmail(txtEmail.Text.Trim()))
@@ -252,15 +251,16 @@ namespace VehicleServiceSystem.UserControls
                 MessageBox.Show("Cannot delete this record.: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        // Search data
+        
         private void btnSearch_Click(object sender, EventArgs e)
         {
             using (MySqlConnection conn = DbConnection.GetConnection())
             {
                 string query = @"SELECT v.VehicleID, c.CustomerID, c.CustomerName, c.Phone, c.Email, c.Address, 
-                                 v.VehicleNumber, v.BrandID, v.VehicleTypeID, v.Model, v.Mileage FROM vehicles v 
-                                 INNER JOIN customers c ON v.CustomerID = c.CustomerID 
-                                 WHERE c.CustomerName LIKE @search OR v.VehicleNumber LIKE @search";
+                                v.VehicleNumber, v.BrandID, v.VehicleTypeID, v.Model, v.Mileage 
+                                FROM vehicles v 
+                                INNER JOIN customers c ON v.CustomerID = c.CustomerID 
+                                WHERE v.VehicleNumber LIKE @search";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@search", "%" + txtSearch.Text.Trim() + "%");
@@ -287,6 +287,7 @@ namespace VehicleServiceSystem.UserControls
             txtVehicleNo.Text = row.Cells["VehicleNumber"].Value?.ToString();
             txtVehicleModel.Text = row.Cells["Model"].Value?.ToString();
             txtMileage.Text = row.Cells["Mileage"].Value?.ToString();
+            btnSave.Enabled = false;
 
             cmbVehicleBrand.SelectedValue = row.Cells["BrandID"].Value;
 
@@ -307,6 +308,7 @@ namespace VehicleServiceSystem.UserControls
             cmbVehicleBrand.SelectedIndex = -1;
             cmbVehicleType.SelectedIndex = -1;
             txtCustomerName.Focus();
+            btnSave.Enabled = true;
         }
 
         private void txtContactNo_KeyPress(object sender, KeyPressEventArgs e)

@@ -120,7 +120,6 @@
             pnlCard1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             pnlCard1.Size = new Size(300, 223);
             pnlCard1.TabIndex = 2;
-            pnlCard1.Paint += pnlCard1_Paint;
             // 
             // lblCard1Title
             // 
@@ -169,7 +168,7 @@
             pnlCard2.Location = new Point(346, 105);
             pnlCard2.Name = "pnlCard2";
             pnlCard2.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            pnlCard2.Size = new Size(300, 223);
+            pnlCard2.Size = new Size(345, 223);
             pnlCard2.TabIndex = 3;
             // 
             // lblCard2Title
@@ -216,7 +215,7 @@
             pnlCard3.Controls.Add(lblCard3Sub);
             pnlCard3.CustomizableEdges = customizableEdges5;
             pnlCard3.FillColor = Color.FromArgb(30, 41, 59);
-            pnlCard3.Location = new Point(666, 105);
+            pnlCard3.Location = new Point(716, 105);
             pnlCard3.Name = "pnlCard3";
             pnlCard3.ShadowDecoration.CustomizableEdges = customizableEdges6;
             pnlCard3.Size = new Size(300, 223);
@@ -266,10 +265,10 @@
             pnlCard4.Controls.Add(lblCard4Sub);
             pnlCard4.CustomizableEdges = customizableEdges7;
             pnlCard4.FillColor = Color.FromArgb(30, 41, 59);
-            pnlCard4.Location = new Point(986, 105);
+            pnlCard4.Location = new Point(1043, 105);
             pnlCard4.Name = "pnlCard4";
             pnlCard4.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            pnlCard4.Size = new Size(374, 223);
+            pnlCard4.Size = new Size(297, 223);
             pnlCard4.TabIndex = 5;
             // 
             // lblCard4Title
@@ -319,7 +318,7 @@
             pnlRecent.Location = new Point(28, 364);
             pnlRecent.Name = "pnlRecent";
             pnlRecent.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            pnlRecent.Size = new Size(835, 426);
+            pnlRecent.Size = new Size(1312, 426);
             pnlRecent.TabIndex = 7;
             // 
             // lblRecentTitle
@@ -360,13 +359,13 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dgvRecent.DefaultCellStyle = dataGridViewCellStyle3;
             dgvRecent.GridColor = Color.FromArgb(51, 65, 85);
-            dgvRecent.Location = new Point(18, 52);
+            dgvRecent.Location = new Point(29, 50);
             dgvRecent.Name = "dgvRecent";
             dgvRecent.ReadOnly = true;
             dgvRecent.RowHeadersVisible = false;
             dgvRecent.RowHeadersWidth = 51;
             dgvRecent.RowTemplate.Height = 34;
-            dgvRecent.Size = new Size(786, 448);
+            dgvRecent.Size = new Size(1253, 450);
             dgvRecent.TabIndex = 1;
             dgvRecent.ThemeStyle.AlternatingRowsStyle.BackColor = Color.FromArgb(30, 41, 59);
             dgvRecent.ThemeStyle.AlternatingRowsStyle.Font = null;

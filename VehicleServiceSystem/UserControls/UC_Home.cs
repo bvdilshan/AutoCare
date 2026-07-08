@@ -2,7 +2,6 @@
 using System.Data;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using System.Windows.Forms.DataVisualization.Charting;
 using VehicleServiceSystem.Data;
 
 namespace VehicleServiceSystem
@@ -12,86 +11,82 @@ namespace VehicleServiceSystem
         public UC_Home()
         {
             InitializeComponent();
+            this.Load += UC_Home_Load; 
         }
-        // Load event handler for the UserControl
+      
         private void UC_Home_Load(object sender, EventArgs e)
         {
             LoadDashboardData();
-
             LoadRecentJobs();
         }
-        // Method to load data for the dashboard cards
+
+        
         private void LoadDashboardData()
         {
-            using (MySqlConnection conn = DbConnection.GetConnection())
+            try
             {
-                conn.Open();
+                using (MySqlConnection conn = DbConnection.GetConnection())
+                {
+                    conn.Open();
 
-                lblCard1Value.Text = ExecuteScalar(conn,
-                    "SELECT COUNT(*) FROM Jobs").ToString();
+                   
+                    MySqlCommand cmd1 = new MySqlCommand("SELECT COUNT(*) FROM Jobs", conn);
+                    lblCard1Value.Text = cmd1.ExecuteScalar().ToString();
 
-                lblCard2Value.Text = ExecuteScalar(conn,
-                    "SELECT IFNULL(SUM(GrandTotal),0) FROM Bills").ToString();
+                   
+                    MySqlCommand cmd2 = new MySqlCommand("SELECT FORMAT(IFNULL(SUM(GrandTotal), 0), 2) FROM Bills", conn);
+                    lblCard2Value.Text = "Rs. " + cmd2.ExecuteScalar().ToString();
 
-                lblCard3Value.Text = ExecuteScalar(conn, @"
-                    SELECT COUNT(*) 
-                    FROM Jobs j
-                    INNER JOIN JobStatus s ON j.StatusID = s.StatusID
-                    WHERE s.StatusName = 'Completed'
-                    AND DATE(j.ServiceDate) = CURDATE()").ToString();
+                   
+                    string queryTodayJobs = @"SELECT COUNT(*) FROM Jobs 
+                                              WHERE BillingStatus = 'Ready for Billing' 
+                                              AND DATE(CompletedAt) = CURDATE()";
+                    MySqlCommand cmd3 = new MySqlCommand(queryTodayJobs, conn);
+                    lblCard3Value.Text = cmd3.ExecuteScalar().ToString();
 
-                lblCard4Value.Text = ExecuteScalar(conn, @"
-                    SELECT COUNT(*) 
-                    FROM StockItems 
-                    WHERE Quantity <= ReorderLevel").ToString();
+                    
+                    MySqlCommand cmd4 = new MySqlCommand("SELECT COUNT(*) FROM StockItems WHERE Quantity <= ReorderLevel", conn);
+                    lblCard4Value.Text = cmd4.ExecuteScalar().ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Dashboard loading error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        // Helper method to execute scalar queries
-        private object ExecuteScalar(MySqlConnection conn, string query)
-        {
-            MySqlCommand cmd = new MySqlCommand(query, conn);
-            return cmd.ExecuteScalar();
-        }
 
-        // Method to load recent jobs into the DataGridView
         private void LoadRecentJobs()
         {
-            using (MySqlConnection conn = DbConnection.GetConnection())
+            try
             {
-                conn.Open();
+                using (MySqlConnection conn = DbConnection.GetConnection())
+                {
+                    
+                    string query = @"SELECT j.JobID, v.VehicleNumber, c.CustomerName, c.Phone, j.BillingStatus, j.CompletedAt 
+                                     FROM jobs j 
+                                     INNER JOIN vehicles v ON j.VehicleID = v.VehicleID 
+                                     INNER JOIN customers c ON v.CustomerID = c.CustomerID 
+                                     ORDER BY j.JobID DESC 
+                                     LIMIT 10";
 
-                string query = @"
-                    SELECT 
-                        j.JobID,
-                        c.CustomerName,
-                        v.VehicleNumber,
-                        s.ServiceName,
-                        js.StatusName,
-                        j.ServiceDate
-                    FROM Jobs j
-                    INNER JOIN Vehicles v ON j.VehicleID = v.VehicleID
-                    INNER JOIN Customers c ON v.CustomerID = c.CustomerID
-                    INNER JOIN ServiceTypes s ON j.ServiceTypeID = s.ServiceTypeID
-                    INNER JOIN JobStatus js ON j.StatusID = js.StatusID
-                    ORDER BY j.ServiceDate DESC
-                    LIMIT 10";
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
 
-                MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                    dgvRecent.DataSource = dt;
 
-                dgvRecent.DataSource = dt;
+                    dgvRecent.Columns["JobID"].HeaderText = "Job ID";
+                    dgvRecent.Columns["VehicleNumber"].HeaderText = "Vehicle No";
+                    dgvRecent.Columns["CustomerName"].HeaderText = "Customer";
+                    dgvRecent.Columns["Phone"].HeaderText = "Contact No";
+                    dgvRecent.Columns["BillingStatus"].HeaderText = "Status";
+                    dgvRecent.Columns["CompletedAt"].HeaderText = "Date/Time";
+                }
             }
-        }
-
-        private void pnlCard1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void btnHome_Click(object sender, EventArgs e)
-        {
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Recent jobs loading error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

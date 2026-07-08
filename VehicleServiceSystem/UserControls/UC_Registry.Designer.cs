@@ -120,7 +120,6 @@
             mainPanel.ShadowDecoration.CustomizableEdges = customizableEdges38;
             mainPanel.Size = new Size(1400, 820);
             mainPanel.TabIndex = 0;
-            
             // 
             // lblTitle
             // 
@@ -158,7 +157,7 @@
             txtSearch.Margin = new Padding(3, 4, 3, 4);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderForeColor = Color.Silver;
-            txtSearch.PlaceholderText = "Search by Customer ID or Vehicle No";
+            txtSearch.PlaceholderText = "Search by Vehicle No";
             txtSearch.SelectedText = "";
             txtSearch.ShadowDecoration.CustomizableEdges = customizableEdges2;
             txtSearch.Size = new Size(314, 42);

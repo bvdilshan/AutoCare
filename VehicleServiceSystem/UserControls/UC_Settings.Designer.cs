@@ -251,7 +251,6 @@
             btnAddUser.Size = new Size(150, 45);
             btnAddUser.TabIndex = 4;
             btnAddUser.Text = "Save";
-            
             // 
             // btnUpdateUser
             // 
@@ -266,7 +265,6 @@
             btnUpdateUser.Size = new Size(150, 45);
             btnUpdateUser.TabIndex = 5;
             btnUpdateUser.Text = "Update";
-            
             // 
             // btnDeleteUser
             // 
@@ -281,7 +279,6 @@
             btnDeleteUser.Size = new Size(150, 45);
             btnDeleteUser.TabIndex = 6;
             btnDeleteUser.Text = "Deactivate";
-           
             // 
             // btnClearUser
             // 
@@ -341,7 +338,7 @@
             txtSearchUser.Margin = new Padding(3, 4, 3, 4);
             txtSearchUser.Name = "txtSearchUser";
             txtSearchUser.PlaceholderForeColor = Color.Silver;
-            txtSearchUser.PlaceholderText = "Search username / role";
+            txtSearchUser.PlaceholderText = "Search username ";
             txtSearchUser.SelectedText = "";
             txtSearchUser.ShadowDecoration.CustomizableEdges = customizableEdges20;
             txtSearchUser.Size = new Size(210, 42);
@@ -368,6 +365,10 @@
             dgvUserList.AllowUserToAddRows = false;
             dgvUserList.AllowUserToDeleteRows = false;
             dgvUserList.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(30, 41, 59);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(51, 65, 85);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dgvUserList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvUserList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUserList.BackgroundColor = Color.FromArgb(30, 41, 59);
@@ -391,30 +392,32 @@
             dgvUserList.ReadOnly = true;
             dgvUserList.RowHeadersVisible = false;
             dgvUserList.RowHeadersWidth = 51;
-            dgvUserList.RowTemplate.Height = 32;
-            dgvUserList.Size = new Size(725, 520);
+            dgvUserList.RowTemplate.Height = 35; 
+            dgvUserList.Size = new Size(691, 520);
             dgvUserList.TabIndex = 10;
-            dgvUserList.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
-            dgvUserList.ThemeStyle.AlternatingRowsStyle.Font = null;
-            dgvUserList.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.Empty;
-            dgvUserList.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = Color.Empty;
-            dgvUserList.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = Color.Empty;
+            dgvUserList.Theme = Guna.UI2.WinForms.Enums.DataGridViewPresetThemes.Dark;
+            dgvUserList.ThemeStyle.AlternatingRowsStyle.BackColor = Color.FromArgb(30, 41, 59);
+            dgvUserList.ThemeStyle.AlternatingRowsStyle.Font = new Font("Segoe UI", 9.5F);
+            dgvUserList.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.White;
+            dgvUserList.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = Color.FromArgb(51, 65, 85);
+            dgvUserList.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = Color.White;
             dgvUserList.ThemeStyle.BackColor = Color.FromArgb(30, 41, 59);
             dgvUserList.ThemeStyle.GridColor = Color.FromArgb(51, 65, 85);
-            dgvUserList.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
+            dgvUserList.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(14, 165, 233);
             dgvUserList.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvUserList.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
+            dgvUserList.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             dgvUserList.ThemeStyle.HeaderStyle.ForeColor = Color.White;
             dgvUserList.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvUserList.ThemeStyle.HeaderStyle.Height = 38;
             dgvUserList.ThemeStyle.ReadOnly = true;
-            dgvUserList.ThemeStyle.RowsStyle.BackColor = Color.White;
+            dgvUserList.ThemeStyle.RowsStyle.BackColor = Color.FromArgb(30, 41, 59);
             dgvUserList.ThemeStyle.RowsStyle.BorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvUserList.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9F);
-            dgvUserList.ThemeStyle.RowsStyle.ForeColor = Color.FromArgb(71, 69, 94);
-            dgvUserList.ThemeStyle.RowsStyle.Height = 32;
-            dgvUserList.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            dgvUserList.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            dgvUserList.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9.5F);
+            dgvUserList.ThemeStyle.RowsStyle.ForeColor = Color.White;
+            dgvUserList.ThemeStyle.RowsStyle.Height = 35; 
+            dgvUserList.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(51, 65, 85);
+            dgvUserList.ThemeStyle.RowsStyle.SelectionForeColor = Color.White;
+
             dgvUserList.CellClick += dgvUserList_CellClick;
             // 
             // UC_Settings

@@ -29,7 +29,7 @@ namespace VehicleServiceSystem.UserControls
             txtLabourCharge.TextChanged += Amount_TextChanged;
             txtTax.TextChanged += Amount_TextChanged;
         }
-
+        // Form load event
         private void UC_billing_Load(object sender, EventArgs e)
         {
             LoadPaymentMethods();
@@ -37,7 +37,7 @@ namespace VehicleServiceSystem.UserControls
             ClearForm();
         }
 
-
+        // Get payment options from database 
         private void LoadPaymentMethods()
         {
             try
@@ -62,7 +62,7 @@ namespace VehicleServiceSystem.UserControls
             }
         }
 
- 
+        // Load jobs 
         private void LoadReadyJobs()
         {
             try
@@ -91,7 +91,7 @@ namespace VehicleServiceSystem.UserControls
             }
         }
 
-
+        // Find jobs using vehicle number or customername
         private void btnSearch_Click(object sender, EventArgs e)
         {
             string search = txtSearchVehicle.Text.Trim();
@@ -112,7 +112,7 @@ namespace VehicleServiceSystem.UserControls
                                    "INNER JOIN vehicles v ON j.VehicleID = v.VehicleID " +
                                    "INNER JOIN customers c ON v.CustomerID = c.CustomerID " +
                                    "WHERE j.BillingStatus = 'Ready for Billing' " +
-                                   "AND (v.VehicleNumber LIKE @search OR c.CustomerName LIKE @search)";
+                                   "AND v.VehicleNumber LIKE @search";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@search", "%" + search + "%");
@@ -130,7 +130,6 @@ namespace VehicleServiceSystem.UserControls
             }
         }
 
- 
         private void dgvReadyJobs_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -146,7 +145,7 @@ namespace VehicleServiceSystem.UserControls
 
             LoadBillItems();
         }
-
+        // Load the items for the selected job and calculate the total
         private void LoadBillItems()
         {
             if (selectedJobId == 0) return;
@@ -189,7 +188,7 @@ namespace VehicleServiceSystem.UserControls
                 MessageBox.Show("Load bill items error: " + ex.Message);
             }
         }
-
+        // Calculate the totals 
         private void Amount_TextChanged(object sender, EventArgs e)
         {
             CalculateTotals();
@@ -210,7 +209,7 @@ namespace VehicleServiceSystem.UserControls
             txtSubTotal.Text = subTotal.ToString("0.00");
             txtGrandTotal.Text = grandTotal.ToString("0.00");
         }
-
+        // Convert string to decimal 
 
         private decimal ToDecimal(string value)
         {
@@ -222,7 +221,7 @@ namespace VehicleServiceSystem.UserControls
             return 0;
         }
 
-
+        // Save the bill 
         private void btnSaveBill_Click(object sender, EventArgs e)
         {
             if (selectedJobId == 0 || dgvBillItems.Rows.Count == 0)
@@ -251,7 +250,7 @@ namespace VehicleServiceSystem.UserControls
                     
                     string insertBillQuery = "INSERT INTO bills (JobID, SubTotal, Tax, GrandTotal, PaymentMethod) " +
                                              "VALUES (@jobId, @subTotal, @tax, @grandTotal, @paymentMethod); " +
-                                             "SELECT LAST_INSERT_ID();"; // 
+                                             "SELECT LAST_INSERT_ID();"; 
 
                     MySqlCommand billCmd = new MySqlCommand(insertBillQuery, conn);
                     billCmd.Parameters.AddWithValue("@jobId", selectedJobId);
@@ -293,7 +292,7 @@ namespace VehicleServiceSystem.UserControls
                 MessageBox.Show("Save bill error: " + ex.Message);
             }
         }
-
+        // Mark the bill as paid
         private void btnMarkPaid_Click(object sender, EventArgs e)
         {
             if (selectedJobId == 0) return;
@@ -340,7 +339,7 @@ namespace VehicleServiceSystem.UserControls
                 MessageBox.Show("Payment error: " + ex.Message);
             }
         }
-
+        // Get the bill ID for a given job ID
         private int GetBillIdByJobId(int jobId)
         {
             using (MySqlConnection conn = DbConnection.GetConnection())
@@ -355,7 +354,7 @@ namespace VehicleServiceSystem.UserControls
                 return 0;
             }
         }
-
+        //print bill
         private void btnPrint_Click(object sender, EventArgs e)
         {
             if (selectedJobId == 0) return;
@@ -376,7 +375,7 @@ namespace VehicleServiceSystem.UserControls
             preview.Height = 700;
             preview.ShowDialog();
         }
-
+        //bill ui
         private void PrintBillPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -411,13 +410,13 @@ namespace VehicleServiceSystem.UserControls
             g.DrawString("Grand Total: Rs. " + txtGrandTotal.Text, fHeader, Brushes.Black, x + 300, y); y += 30;
             g.DrawString("Thank You!", fHeader, Brushes.Black, x, y);
         }
-
+        // Clear 
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearForm();
             LoadReadyJobs();
         }
-
+        // Reset all fields
         private void ClearForm()
         {
             selectedJobId = 0;

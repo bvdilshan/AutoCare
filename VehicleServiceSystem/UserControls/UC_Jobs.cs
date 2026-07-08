@@ -66,7 +66,7 @@ namespace VehicleServiceSystem.UserControls
                 cmbServiceType.ValueMember = "ServiceTypeID";
             }
         }
-        //
+        
         private void UC_Jobs_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible) { LoadVehicles(); LoadJobs(); ClearForm(); }
@@ -150,14 +150,14 @@ namespace VehicleServiceSystem.UserControls
         private void EnablePartsSection()
         {
             pnlParts.Enabled = true;
-            lblStepInfo.Text = "Add used parts or send job to billing";
+            lblStepInfo.Text = "-> Add used parts or send job to billing";
         }
 
         private void DisablePartsSection()
         {
             pnlParts.Enabled = false;
             btnCompleteJob.Enabled = false;
-            lblStepInfo.Text = "Create or select a job first";
+            lblStepInfo.Text = "-> Create or select a job first";
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -284,7 +284,7 @@ namespace VehicleServiceSystem.UserControls
                     cmd.ExecuteNonQuery();
                 }
 
-                lblStepInfo.Text = "Step 3: Job sent to billing";
+                lblStepInfo.Text = "-> Job sent to billing";
                 MessageBox.Show("Job status updated to Ready for Billing.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadJobs();
                 LoadUsedParts();

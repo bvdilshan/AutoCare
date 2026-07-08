@@ -1,4 +1,6 @@
-﻿using Guna.UI2.WinForms;
+﻿using System;
+using System.Windows.Forms;
+using Guna.UI2.WinForms;
 using VehicleServiceSystem.UserControls;
 
 namespace VehicleServiceSystem
@@ -12,15 +14,31 @@ namespace VehicleServiceSystem
             InitializeComponent();
             LoadHome();
         }
-        // Overloaded constructor that accepts the user's role and applies permissions accordingly
+
         public Dashboard(string role)
         {
             InitializeComponent();
             userRole = role;
             ApplyRolePermissions();
-            LoadHome();
+
+            if (userRole == "Admin")
+            {
+                LoadHome();
+            }
+            else if (userRole == "Supervisor")
+            {
+                btnRegistry_Click(this, EventArgs.Empty);
+            }
+            else if (userRole == "Cashier")
+            {
+                btnBilling_Click(this, EventArgs.Empty);
+            }
+            else if (userRole == "Mechanic")
+            {
+                btnJobs_Click(this, EventArgs.Empty);
+            }
         }
-        // This method loads the home user control into the main panel
+
         private void LoadHome()
         {
             dbpanel.Controls.Clear();
@@ -28,7 +46,7 @@ namespace VehicleServiceSystem
             home.Dock = DockStyle.Fill;
             dbpanel.Controls.Add(home);
         }
-        // This method sets the visibility of buttons based on the user's role
+
         private void ApplyRolePermissions()
         {
             if (userRole == "Admin")
@@ -47,7 +65,6 @@ namespace VehicleServiceSystem
                 btnRegistry.Visible = true;
                 btnJobs.Visible = true;
                 btnStock.Visible = true;
-
                 btnBilling.Visible = false;
                 btnReport.Visible = false;
                 btnsettings.Visible = false;
@@ -66,7 +83,6 @@ namespace VehicleServiceSystem
             {
                 btnHome.Visible = false;
                 btnJobs.Visible = true;
-
                 btnRegistry.Visible = false;
                 btnStock.Visible = false;
                 btnBilling.Visible = false;
@@ -74,6 +90,7 @@ namespace VehicleServiceSystem
                 btnsettings.Visible = false;
             }
         }
+
         private void btnHome_Click(object sender, EventArgs e)
         {
             LoadHome();
@@ -136,12 +153,10 @@ namespace VehicleServiceSystem
 
         private void btnCustomers_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dbpanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
     }
 }
